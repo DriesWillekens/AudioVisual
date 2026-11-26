@@ -1,32 +1,15 @@
-cmake_minimum_required(VERSION 3.19)
-project(AudioVisual LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.21)
+project(AudioVisual VERSION 0.1 LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
 
-qt_standard_project_setup()
+find_package(Qt6 REQUIRED COMPONENTS Widgets OpenGLWidgets Network NetworkAuth)
 
-qt_add_executable(AudioVisual
-    WIN32 MACOSX_BUNDLE
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp src/*.h)
 
-target_link_libraries(AudioVisual
-    PRIVATE
-        Qt::Core
-        Qt::Widgets
-)
-
-install(TARGETS AudioVisual
-    BUNDLE  DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-qt_generate_deploy_app_script(
-    TARGET AudioVisual
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-)
-install(SCRIPT ${deploy_script})
+qt_add_executable(AudioVisual main.cpp ${SOURCES})
+target_include_directories(AudioVisual PRIVATE src)
+target_link_libraries(AudioVisual PRIVATE
+    Qt6::Widgets Qt6::OpenGLWidgets Qt6::Network Qt6::NetworkAuth)

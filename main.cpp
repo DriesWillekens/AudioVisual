@@ -1,12 +1,10 @@
-#include "mainwindow.h"
-
 #include <QApplication>
+#include "ui/MainWindow.h"
 
-//testcomment
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return QApplication::exec();
+    QApplication app(argc, argv);
+    wavelab::MainWindow window;
+    window.show();
+    return app.exec();
 }
