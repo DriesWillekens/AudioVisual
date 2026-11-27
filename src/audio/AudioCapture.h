@@ -19,5 +19,4 @@ namespace wavelab {
     signals:
         void samplesReady(const QList<float> &samples);
     };
-
 }
